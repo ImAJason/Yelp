@@ -147,9 +147,6 @@ def businessname(df, tid):
 def idname(df, tid):
     return df['user_name'][df['user_id']==tid].values[0]
 
-
-# In[66]:
-
 tops=knearest(testbizid, fdf.business_id.unique(), db, k=5)
 print "For",businessname(fdf, testbizid), ", top matches are:"
 for i, (biz_id, sim, nc) in enumerate(tops):
