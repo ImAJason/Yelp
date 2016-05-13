@@ -1,8 +1,6 @@
 
 # coding: utf-8
 
-# In[1]:
-
 get_ipython().magic(u'matplotlib inline')
 from collections import defaultdict
 import json
@@ -11,13 +9,7 @@ import scipy as sp
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
-# In[2]:
-
 df=pd.read_csv("bigdf.csv")
-
-
-# In[3]:
 
 def recalculate(odf):
     
@@ -40,15 +32,9 @@ def recalculate(odf):
     ndf.reset_index(inplace=True)
     return ndf
 
-
-# In[6]:
-
 # Make a smaller data set based on specified numbers
 Filtered = df[(df.user_review_count>65) & (df.business_review_count>155)]
 fdf= recalculate(Filtered)
-
-
-# In[7]:
 
 from scipy.stats.stats import pearsonr
 def pearson_sim(rest1_reviews, rest2_reviews, n_common):
@@ -61,8 +47,6 @@ def pearson_sim(rest1_reviews, rest2_reviews, n_common):
     return rho
 
 
-# In[8]:
-
 def get_restaurant_reviews(restaurant_id, df, set_of_users):
     """
     given a resturant id and a set of reviewers, return the sub-dataframe of their
@@ -73,9 +57,6 @@ def get_restaurant_reviews(restaurant_id, df, set_of_users):
     reviews = reviews[reviews.user_id.duplicated()==False]
     #reviews = reviews[reviews.drop_duplicates(reviews.user_id)]
     return reviews
-
-
-# In[9]:
 
 def calculate_similarity(rest1, rest2, df, similarity_func):
     
@@ -95,8 +76,6 @@ def calculate_similarity(rest1, rest2, df, similarity_func):
         return 0, n_common
     return sim, n_common
 
-
-# In[10]:
 
 class Database:
     "A class representing a database of similaries and common supports"
@@ -137,22 +116,13 @@ class Database:
         nsup=self.database_sup[self.uniquebizids[b1]][self.uniquebizids[b2]]
         return (sim, nsup)
 
-
-# In[11]:
-
 db=Database(fdf)
 db.populate_by_calculating(pearson_sim)
-
-
-# In[12]:
 
 def shrunk_sim(sim, n_common):
     "takes a similarity and shrinks it down by using the regularizer"
     nsim=(n_common*sim)/(n_common+3.)
     return nsim
-
-
-# In[45]:
 
 from operator import itemgetter
 def knearest(restaurant_id, set_of_restaurants, dbase, k=5.):
@@ -169,13 +139,8 @@ def knearest(restaurant_id, set_of_restaurants, dbase, k=5.):
     sorted_similar=sorted(sorted_similar, key=itemgetter(1), reverse = True)
     return sorted_similar[0:k]
 
-
-# In[46]:
-
+#TESTBUSINESSID!!!!!
 testbizid="eIxSLxzIlfExI6vgAbn2JA"
-
-
-# In[53]:
 
 def businessname(df, tid):
     return df['biz_name'][df['business_id']==tid].values[0]
@@ -189,9 +154,6 @@ tops=knearest(testbizid, fdf.business_id.unique(), db, k=5)
 print "For",businessname(fdf, testbizid), ", top matches are:"
 for i, (biz_id, sim, nc) in enumerate(tops):
     print i,businessname(fdf,biz_id), "| Sim", sim, "| Support",nc
-
-
-# In[59]:
 
 def get_top_recos_for_user(userid, df, dbase, n=5, k=7):
     bizs=get_user_top_choices(userid, df, numchoices=n)['business_id'].values
@@ -226,9 +188,6 @@ def get_top_recos_for_user(userid, df, dbase, n=5, k=7):
 #toprecos=get_top_recos_for_user(testuserid, Filtered, db, n=5, k=7)
 #toprecos
 
-
-# In[65]:
-
 def get_user_top_choices(user_id, df, numchoices=5):
     "get the sorted top 5 restaurants for a user by the star rating the user gave them"
     udf=df[df.user_id==user_id][['business_id','stars']].sort(['stars'], ascending=False).head(numchoices)
@@ -239,11 +198,8 @@ bizs=get_user_top_choices(testuserid, fdf)['business_id'].values
 [biznamefromid(fdf, biz_id) for biz_id in bizs]"""
 
 
-# In[64]:
-
 print "For user", idname(Filtered,testuserid)+',', "the top recommendations are:"
 testuserid="7cR92zkDv4W3kqzii6axvg"
 toprecos=get_top_recos_for_user(testuserid, Filtered, db, n=5, k=7)
 for biz_id, biz_avg in toprecos: 
     print biznamefromid(Filtered,biz_id), "| Average Rating |", biz_avg
-
