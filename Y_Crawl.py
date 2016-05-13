@@ -13,7 +13,7 @@ import time
 
 # In[3]:
 
-URL = lambda zipcode, page_num: 'http://www.yelp.com/search?find_loc={0}'            '&start={1}&cflt=food'.format(zipcode, page_num)
+URL = lambda zipcode, page_num: 'http://www.yelp.com/search?find_loc={0}&start={1}&cflt=food'.format(zipcode, page_num)
 
 
 # In[4]:
