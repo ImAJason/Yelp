@@ -1,8 +1,6 @@
 
 # coding: utf-8
 
-# In[2]:
-
 from bs4 import BeautifulSoup
 import urllib
 import re
@@ -10,13 +8,8 @@ import pandas as pd
 import numpy as np
 import time
 
-
-# In[3]:
-
 URL = lambda zipcode, page_num: 'http://www.yelp.com/search?find_loc={0}&start={1}&cflt=food'.format(zipcode, page_num)
 
-
-# In[4]:
 
 def individual_restaurants(zipcode, page_num):
     url = URL(zipcode, page_num)
@@ -32,9 +25,6 @@ def individual_restaurants(zipcode, page_num):
         restaurant_list.append(individual_url)
     return restaurant_list, True
 #individual_restaurants(77494, 0)
-
-
-# In[5]:
 
 def list_of_restaurants(zipcode):
     page_num = 0
@@ -56,9 +46,6 @@ def list_of_restaurants(zipcode):
 
     return all_restaurants
 #list_of_restaurants(77494)
-
-
-# In[6]:
 
 def businesses():
     restaurant_list = list_of_restaurants(zipcode)
@@ -129,9 +116,6 @@ def businesses():
     df['stars'] = stars_list
     return df
 
-
-# In[7]:
-
 def individual_urls(zipcode):
     restaurant_list = list_of_restaurants(zipcode)
     individual_urls = []
@@ -145,9 +129,6 @@ def individual_urls(zipcode):
             individual_urls.append(user_link)
     return individual_urls
 #individual_urls()
-
-
-# In[8]:
 
 def individual(zipcode):
     user_list = individual_urls(zipcode)
@@ -192,10 +173,6 @@ def individual(zipcode):
     return merged_df
 #individual()
 
-
-# In[ ]:
-
 #zipcode = 77494
 merged_df = individual(zipcode)
 merged_df.to_csv('/Users/jasonwang/Desktop/YelpExtract.csv', sep='\t')
-
