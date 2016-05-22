@@ -6,4 +6,4 @@ The crawler was completely written by me in an attempt to learn BeautifulSoup. I
 
 The recommender is modified from Harvard's CS109 course examples/assignments.
 
-Discontinued because of terms of service.
+Discontinued because of TOS.
