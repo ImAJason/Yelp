@@ -1,10 +1,14 @@
-### Yelp
+### Yelp Exploration
+--------
+This was my first project with python, please overlook the ugly code!
 
-This was entirely a personal learning project; please excuse the ugly code!
+The crawler extracts restaurant and reviewer data from a specific zipcode. I used the beautifulsoup library to learn more about it and to also avoid getting rate limited.
 
-The crawler was completely written by me in an attempt to learn BeautifulSoup. It is opensourced just for keepsake.
+Example from zipcode 77494:
+![alt tag](https://raw.githubusercontent.com/ImAJason/Yelp/master/Example_Output.png)
 
-![alt tag](https://raw.githubusercontent.com/ImAJason/Yelp/branch/path/to/Example_Output.png)
+--------
+The recommender is still in progress and modified from Harvard's CS109 course.
 
-The recommender is modified from Harvard's CS109 course examples/assignments.
-
+--------
+for keepsake
